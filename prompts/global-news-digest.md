@@ -1,9 +1,31 @@
 ### 目标
 
-使用内置工具（特别是 `news-aggregator-skill`，位于 `{baseDir}/deps/news-aggregator-skill/`，以及 `last30days`，位于 `{baseDir}/deps/last30days/`）从除了 Hacker News 以外的其他主流科技新闻网站和社区获取约 100 条最新资讯。
-**极其重要的禁令：** 绝对、坚决不能包含任何来自 Hacker News (HN) 的信息，因为我有专门的脚本处理 HN，这里如果包含会导致严重的内容重复！在使用 `news-aggregator-skill` 时必须明确排除 HN 数据源，在使用 `last30days` 技能时也必须排除 HN 相关的搜索结果。
+从除了 Hacker News 以外的其他主流科技新闻网站和社区获取约 100 条最新资讯，从中筛选并极其深度地解码与我相关的内容。拒绝蜻蜓点水式的短视频摘要，要输出高密度的"学术与工程内参"。
 
-从中筛选并极其深度地解码与我相关的内容。拒绝蜻蜓点水式的短视频摘要，要输出高密度的"学术与工程内参"。
+**极其重要的禁令：** 绝对、坚决不能包含任何来自 Hacker News (HN) 的信息，因为我有专门的脚本处理 HN，这里如果包含会导致严重的内容重复！
+
+### 执行 Pipeline（强制使用此流程，禁止弹出交互菜单让用户选择）
+
+必须严格按照以下多步 Pipeline 自动执行，全程不需要用户干预：
+
+1. **批量抓取全部信息源**：直接运行以下命令抓取所有非 HN 信息源的新闻（GitHub Trending、Product Hunt、36Kr、腾讯新闻、华尔街见闻、V2EX、微博）：
+   ```bash
+   python3 {baseDir}/deps/news-aggregator-skill/scripts/fetch_news.py --source github --limit 25 --deep
+   python3 {baseDir}/deps/news-aggregator-skill/scripts/fetch_news.py --source producthunt --limit 15 --deep
+   python3 {baseDir}/deps/news-aggregator-skill/scripts/fetch_news.py --source 36kr --limit 15 --deep
+   python3 {baseDir}/deps/news-aggregator-skill/scripts/fetch_news.py --source tencent --limit 15 --deep
+   python3 {baseDir}/deps/news-aggregator-skill/scripts/fetch_news.py --source wallstreetcn --limit 15 --deep
+   python3 {baseDir}/deps/news-aggregator-skill/scripts/fetch_news.py --source v2ex --limit 15 --deep
+   python3 {baseDir}/deps/news-aggregator-skill/scripts/fetch_news.py --source weibo --limit 15 --deep
+   ```
+   同时用 `last30days` 补充 Reddit/X/Web 上的热门 AI 话题：
+   ```bash
+   python3 {baseDir}/deps/last30days/scripts/last30days.py "AI LLM tech trends" --emit=compact
+   ```
+   **禁止使用 `--source hackernews`！禁止弹出交互菜单！直接执行命令！**
+2. **保存原始数据**：将每个信息源的抓取结果分别写入 `tmp/news_raw/` 目录下的临时文件（如 `tmp/news_raw/github.json`、`tmp/news_raw/producthunt.json` 等）。
+3. **筛选高价值新闻**：读取所有临时文件，根据下方「筛选标准」选出 30 条最具含金量的候选新闻。GitHub Trending 单独做成 table（至少 20 条），不计入 30 条名额。
+4. **逐板块深度解读**：按信息源分板块，为每个板块创建独立的 todo item，逐个获取、分析、写入最终文件。每条新闻必须按下方「解读要求」进行完整的深度拆解。
 
 ### 我的背景
 <!-- ⚠️ 请把下面的内容替换为你自己的信息 -->
@@ -52,6 +74,6 @@
 - 重认知增量：让我读完这篇报告后，完全不需要再去刷原网页就能吸收 100% 的核心养分。
 
 ### 输出
-报告的保存路径是 `./新闻信息/news/{YYYY-MM-DD 全网信息}.md`，路径可按需修改。
+报告的保存路径是 `./news/{YYYY-MM-DD 全网信息}.md`，路径可按需修改。
 
-**最重要的指令！** 假设有多个板块，比如Github、Product Hunt、腾讯新闻，那么要开多个todo list，逐个获取新闻、分析、写入文件，每个todo item处理的时候都要求有本文当要求的高质量分析，不能点到为止，否则没有意义。实际上板块应该非常多，因为你的skills里有非常多的信息源，每个信息源的信息我都要！
+**最重要的指令！** 按板块分 todo item 逐个处理（GitHub、Product Hunt、36Kr、腾讯新闻、华尔街见闻、V2EX、微博、Reddit/X），每个 todo item 都必须有本文要求的高质量深度分析，不能点到为止！
