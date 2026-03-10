@@ -1,6 +1,6 @@
 ### 目标
 
-用你安装的技能（特别是 `news-aggregator-skill` 和 `last30days` 技能）从除了 Hacker News 以外的其他主流科技新闻网站和社区获取约 100 条最新资讯。
+使用内置工具（特别是 `news-aggregator-skill`，位于 `{baseDir}/deps/news-aggregator-skill/`，以及 `last30days`，位于 `{baseDir}/deps/last30days/`）从除了 Hacker News 以外的其他主流科技新闻网站和社区获取约 100 条最新资讯。
 **极其重要的禁令：** 绝对、坚决不能包含任何来自 Hacker News (HN) 的信息，因为我有专门的脚本处理 HN，这里如果包含会导致严重的内容重复！在使用 `news-aggregator-skill` 时必须明确排除 HN 数据源，在使用 `last30days` 技能时也必须排除 HN 相关的搜索结果。
 
 从中筛选并极其深度地解码与我相关的内容。拒绝蜻蜓点水式的短视频摘要，要输出高密度的"学术与工程内参"。

@@ -1,6 +1,8 @@
-# News Digest Skill
+# News Digest Skill (中文版)
 
-AI/科技新闻深度解读工作流，适用于 Claude Code。
+AI/科技新闻深度解读工作流，适用于 Claude Code。所有依赖已内置，安装即用。
+
+> English version: [news-digest-skill-en](https://github.com/RocStone/news-digest-skill-en)
 
 ## 功能
 
@@ -13,26 +15,28 @@ AI/科技新闻深度解读工作流，适用于 Claude Code。
 ## 安装
 
 ```bash
-npx skills add RocStone/news-digest-skill
+git clone https://github.com/RocStone/news-digest-skill-cn.git ~/.claude/skills/news-digest-skill-cn
 ```
 
-### 依赖 Skill
+无需额外安装依赖。以下工具已内置在 `deps/` 目录中：
 
-安装本 skill 前，请先安装：
+- [hn](https://clawhub.ai/gchapim/hackernews) (MIT-0) — Hacker News CLI
+- [news-aggregator-skill](https://github.com/cclank/news-aggregator-skill) (MIT) — 全网新闻聚合
+- [last30days](https://github.com/mvanhorn/last30days-skill) (MIT) — Reddit + X + Web 研究
 
-```bash
-npx skills add hn
-npx skills add news-aggregator-skill
-```
+### 运行环境要求
+
+- Python 3.11+
+- [uv](https://docs.astral.sh/uv/)（HN 工具需要）
 
 ## 配置
 
 安装后编辑 prompts 目录下三个文件中的「我的背景」部分：
 
 ```
-~/.agents/skills/news-digest-skill/prompts/hn-digest.md
-~/.agents/skills/news-digest-skill/prompts/global-news-digest.md
-~/.agents/skills/news-digest-skill/prompts/deep-dive.md
+~/.claude/skills/news-digest-skill-cn/prompts/hn-digest.md
+~/.claude/skills/news-digest-skill-cn/prompts/global-news-digest.md
+~/.claude/skills/news-digest-skill-cn/prompts/deep-dive.md
 ```
 
 将占位符替换为你自己的信息（职业身份、关注方向、投资偏好等），AI 会据此生成个性化解读。
@@ -48,12 +52,19 @@ npx skills add news-aggregator-skill
 /洞察 https://example.com    # 深度分析指定链接
 ```
 
-## 输出示例 or 想看现成的？
+## 输出示例
 
-查看 [daily-news-digest](https://github.com/RocStone/daily-news-digest) 仓库获取每日生成的新闻解读。我会每日更新~
+查看 [daily-news-digest](https://github.com/RocStone/daily-news-digest) 仓库获取每日生成的新闻解读样例。
 
-## 如果你觉得我的开源精神值得鼓励....
-请给我一个star吧~
+## 致谢
+
+本项目基于以下开源 skill 构建：
+
+| 工具 | 作者 | License | 原始仓库 |
+|------|------|---------|----------|
+| hn | gchapim | MIT-0 | [clawhub.ai/gchapim/hackernews](https://clawhub.ai/gchapim/hackernews) |
+| news-aggregator-skill | cclank | MIT | [github.com/cclank/news-aggregator-skill](https://github.com/cclank/news-aggregator-skill) |
+| last30days | mvanhorn | MIT | [github.com/mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) |
 
 ## License
 
