@@ -48,9 +48,9 @@ npx skills add news-aggregator-skill
 /洞察 https://example.com    # 深度分析指定链接
 ```
 
-## 输出示例
+## 输出示例 or 想看现成的？
 
-查看 [daily-news-digest](https://github.com/RocStone/daily-news-digest) 仓库获取每日生成的新闻解读样例。
+查看 [daily-news-digest](https://github.com/RocStone/daily-news-digest) 仓库获取每日生成的新闻解读。我会每日更新~
 
 ## License
 
