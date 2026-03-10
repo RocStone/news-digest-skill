@@ -52,6 +52,9 @@ npx skills add news-aggregator-skill
 
 查看 [daily-news-digest](https://github.com/RocStone/daily-news-digest) 仓库获取每日生成的新闻解读。我会每日更新~
 
+# 如果你觉得我的开源精神值得鼓励....
+请给我一个star吧~
+
 ## License
 
 MIT
